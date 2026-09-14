@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Le Fouquet — Menu</title>
+<meta name="description" content="Menu digital du restaurant Le Fouquet : restaurant, bar, pizzeria, pâtisserie. Commandez directement par WhatsApp.">
+<meta name="theme-color" content="#12100d">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🍽️</text></svg>">
+<link rel="stylesheet" href="assets/styles.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="wrap header-inner">
+    <div class="brand">
+      <span class="brand-mark">LF</span>
+      <span class="brand-text">
+        <span class="brand-name" data-restaurant-name>Le Fouquet</span>
+        <span class="brand-tagline" data-restaurant-tagline></span>
+      </span>
+    </div>
+    <div class="header-actions">
+      <a class="btn btn-ghost" id="callLink" href="#" aria-label="Appeler le restaurant">
+        <span aria-hidden="true">📞</span><span class="btn-label">Appeler</span>
+      </a>
+      <a class="btn btn-wa" id="waContactLink" href="#" target="_blank" rel="noopener" aria-label="Écrire au restaurant sur WhatsApp">
+        <span aria-hidden="true">💬</span><span class="btn-label">WhatsApp</span>
+      </a>
+    </div>
+  </div>
+</header>
+
+<div class="hero">
+  <div class="wrap">
+    <p class="hero-kicker" data-restaurant-specialites></p>
+    <h1>La carte</h1>
+    <p class="hero-sub">Composez votre commande, puis envoyez-la en un tap sur le WhatsApp du restaurant.</p>
+  </div>
+</div>
+
+<div class="toolbar">
+  <div class="wrap">
+    <div class="search-box">
+      <span class="search-icon" aria-hidden="true">🔎</span>
+      <input type="search" id="search" placeholder="Rechercher un plat, une boisson…" aria-label="Rechercher dans le menu" autocomplete="off">
+      <button type="button" class="search-clear" id="searchClear" hidden aria-label="Effacer la recherche">✕</button>
+    </div>
+    <nav class="tabs" id="sectionTabs" aria-label="Parties du menu"></nav>
+    <nav class="chips" id="categoryChips" aria-label="Catégories"></nav>
+  </div>
+</div>
+
+<main class="wrap" id="menuRoot"></main>
+
+<p class="empty-state" id="emptyState" hidden>Aucun plat ne correspond à votre recherche.</p>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <p class="footer-name" data-restaurant-name>Le Fouquet</p>
+    <p data-restaurant-tagline></p>
+    <p class="footer-phones" id="footerPhones"></p>
+    <p class="footer-note">Prix en francs CFA (F CFA), service compris. Les prix et disponibilités peuvent évoluer&nbsp;: confirmez avec le restaurant lors de la commande.</p>
+  </div>
+</footer>
+
+<!-- Bouton panier flottant -->
+<button type="button" class="cart-fab" id="cartFab" hidden aria-controls="cartPanel" aria-expanded="false">
+  <span class="cart-fab-count" id="cartFabCount">0</span>
+  <span class="cart-fab-label">Voir ma commande</span>
+  <span class="cart-fab-total" id="cartFabTotal">0 F</span>
+</button>
+
+<!-- Panier / commande -->
+<div class="overlay" id="overlay" hidden></div>
+
+<aside class="cart-panel" id="cartPanel" hidden aria-labelledby="cartTitle" role="dialog" aria-modal="true">
+  <div class="cart-head">
+    <h2 id="cartTitle">Ma commande</h2>
+    <button type="button" class="icon-btn" id="cartClose" aria-label="Fermer le panier">✕</button>
+  </div>
+
+  <div class="cart-body">
+    <ul class="cart-lines" id="cartLines"></ul>
+    <p class="cart-empty" id="cartEmpty">Votre commande est vide. Ajoutez des plats depuis la carte.</p>
+
+    <div class="cart-total-row">
+      <span>Total</span>
+      <strong id="cartTotal">0 F</strong>
+    </div>
+
+    <form class="order-form" id="orderForm" novalidate>
+      <fieldset>
+        <legend>Type de commande</legend>
+        <div class="radio-row">
+          <label class="radio"><input type="radio" name="mode" value="surplace" checked><span>Sur place</span></label>
+          <label class="radio"><input type="radio" name="mode" value="emporter"><span>À emporter</span></label>
+          <label class="radio"><input type="radio" name="mode" value="livraison"><span>Livraison</span></label>
+        </div>
+      </fieldset>
+
+      <label class="field">
+        <span class="field-label">Votre nom</span>
+        <input type="text" id="customerName" name="customerName" placeholder="Ex. Kevin" autocomplete="name">
+      </label>
+
+      <label class="field" id="tableField">
+        <span class="field-label">Numéro de table <span class="opt">(facultatif)</span></span>
+        <input type="text" id="tableNumber" name="tableNumber" placeholder="Ex. 12" inputmode="numeric">
+      </label>
+
+      <label class="field" id="addressField" hidden>
+        <span class="field-label">Adresse de livraison</span>
+        <input type="text" id="address" name="address" placeholder="Quartier, repère, rue…" autocomplete="street-address">
+      </label>
+
+      <label class="field" id="timeField">
+        <span class="field-label">Heure souhaitée <span class="opt">(facultatif)</span></span>
+        <input type="text" id="wantedTime" name="wantedTime" placeholder="Ex. 19h30 ou « dès que possible »">
+      </label>
+
+      <label class="field">
+        <span class="field-label">Note pour la cuisine <span class="opt">(facultatif)</span></span>
+        <textarea id="orderNote" name="orderNote" rows="2" placeholder="Ex. bien épicé, sans oignon, poulet à la place du bœuf…"></textarea>
+      </label>
+
+      <p class="form-error" id="formError" hidden></p>
+
+      <button type="submit" class="btn btn-wa btn-block" id="sendWhatsapp">
+        <span aria-hidden="true">💬</span> Envoyer la commande sur WhatsApp
+      </button>
+      <button type="button" class="btn btn-ghost btn-block" id="copyOrder">Copier le récapitulatif</button>
+      <button type="button" class="link-btn" id="clearCart">Vider la commande</button>
+      <p class="wa-hint">WhatsApp s'ouvre avec votre commande déjà rédigée&nbsp;: il ne reste qu'à appuyer sur «&nbsp;Envoyer&nbsp;».</p>
+    </form>
+  </div>
+</aside>
+
+<div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+
+<script src="data/menu.js"></script>
+<script src="assets/app.js"></script>
+</body>
+</html>
