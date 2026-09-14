@@ -1,0 +1,43 @@
+# Publie le menu sur GitHub Pages à chaque push sur main.
+# `enablement: true` active GitHub Pages automatiquement au premier passage,
+# sans avoir à le faire à la main dans Settings → Pages.
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Une seule publication à la fois ; les pushes suivants remplacent celui en attente.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Configurer Pages (et l'activer si besoin)
+        uses: actions/configure-pages@v5
+        with:
+          enablement: true
+
+      - name: Empaqueter le site
+        uses: actions/upload-pages-artifact@v3
+        with:
+          # Le site est statique et servi depuis la racine du dépôt.
+          path: .
+
+      - name: Déployer
+        id: deployment
+        uses: actions/deploy-pages@v4
