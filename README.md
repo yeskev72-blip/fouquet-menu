@@ -9,8 +9,22 @@ Le site est 100 % statique : trois fichiers, aucune dépendance, aucun serveur �
 
 Ouvrez `index.html` dans un navigateur — c'est tout. Aucune construction préalable.
 
-Pour le mettre en ligne, déposez le dossier sur n'importe quel hébergeur statique
-(GitHub Pages, Netlify, Vercel, ou un simple dossier `public_html` chez un hébergeur classique).
+## Mise en ligne sur GitHub Pages
+
+L'activation de Pages ne peut pas être automatisée : le jeton des workflows GitHub
+Actions peut déployer vers Pages, mais pas créer le site la première fois
+(`Create Pages site failed: Resource not accessible by integration`). Cette étape
+se fait donc une seule fois, à la main :
+
+**Settings → Pages → Source : « Deploy from a branch » → Branch : `main` / `(root)` → Save**
+
+Le site est en ligne une à deux minutes plus tard sur
+<https://yeskev72-blip.github.io/fouquet-menu/>, et chaque push sur `main` le met
+à jour automatiquement. Le fichier `.nojekyll` désactive le prétraitement Jekyll,
+inutile ici.
+
+Le site étant entièrement statique, il fonctionne aussi tel quel sur Netlify, Vercel,
+ou dans un simple dossier `public_html` chez un hébergeur classique.
 
 ## Ce que le client peut faire
 
