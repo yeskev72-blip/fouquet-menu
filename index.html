@@ -36,7 +36,43 @@
     </script>
   </head>
   <body>
-    <div id="root"></div>
+    <!--
+      Écran de lancement rendu avant tout JavaScript : sur un téléphone
+      d'entrée de gamme, attendre le bundle pour afficher quelque chose coûte
+      une à deux secondes de page blanche. React remplace ce contenu en
+      montant dans #root, avec le même visuel, donc sans transition visible.
+
+      Les deux couleurs ci-dessous redoublent volontairement les jetons de
+      src/styles/tokens.css : la feuille de styles n'est pas encore chargée
+      au premier rendu, donc les variables n'existent pas. Toute modification
+      du fond ou de l'accent doit être reportée ici.
+    -->
+    <style>
+      #lancement {
+        position: fixed;
+        inset: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 28px;
+        background: #0e0f11; /* = --fonte-bg, thème sombre */
+        font-family: system-ui, sans-serif;
+      }
+      :root[data-theme='light'] #lancement {
+        background: #f4f1ea; /* = --fonte-bg, thème clair */
+      }
+    </style>
+    <div id="root">
+      <div id="lancement">
+        <svg width="128" height="128" viewBox="0 0 120 120" role="img" aria-label="Fonte">
+          <rect width="120" height="120" rx="30" fill="#FF9F1C" />
+          <circle cx="60" cy="60" r="40" fill="#1A1204" />
+          <circle cx="60" cy="60" r="27" fill="none" stroke="#FF9F1C" stroke-width="3" />
+          <circle cx="60" cy="60" r="9" fill="#FF9F1C" />
+        </svg>
+      </div>
+    </div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
