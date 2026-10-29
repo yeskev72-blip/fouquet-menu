@@ -1,0 +1,30 @@
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+# L'appli est une SPA : toute URL inconnue doit rendre index.html, sinon un
+# lien profond ouvert à froid renvoie une 404.
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+# Le service worker ne doit jamais être servi depuis un cache long : c'est
+# lui qui porte la mise à jour de tout le reste.
+[[headers]]
+  for = "/sw.js"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"
+
+[[headers]]
+  for = "/manifest.webmanifest"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"
+    Content-Type = "application/manifest+json"
+
+# Les fichiers d'assets portent une empreinte dans leur nom : ils peuvent
+# être gardés indéfiniment.
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
