@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <!-- viewport-fit=cover : l'appli dessine sous l'encoche, les marges de
+         zone sûre sont gérées en CSS. user-scalable reste autorisé pour
+         l'accessibilité, les champs sont à 16 px pour éviter le zoom auto. -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="description" content="Fonte — note ta série, vois ta progression. Suivi de musculation qui marche hors ligne." />
+
+    <!-- Couleur de la barre du navigateur, alignée sur le thème actif -->
+    <meta name="theme-color" content="#0E0F11" media="(prefers-color-scheme: dark)" />
+    <meta name="theme-color" content="#F4F1EA" media="(prefers-color-scheme: light)" />
+
+    <!-- iOS : plein écran depuis l'écran d'accueil -->
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="Fonte" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="icon" type="image/svg+xml" href="/icone.svg" />
+
+    <title>Fonte</title>
+    <script>
+      // Thème appliqué avant le premier rendu, pour éviter un flash clair.
+      // La valeur fait foi dans la base ; localStorage n'en est que le miroir.
+      try {
+        var pref = localStorage.getItem('fonte.theme')
+        if (pref !== 'dark' && pref !== 'light') {
+          pref = window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark'
+        }
+        document.documentElement.setAttribute('data-theme', pref)
+      } catch (e) {
+        document.documentElement.setAttribute('data-theme', 'dark')
+      }
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

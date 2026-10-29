@@ -1,0 +1,98 @@
+/* Polices servies depuis le paquet, jamais depuis un CDN : l'appli doit
+   démarrer hors ligne. Seuls les poids réellement utilisés sont importés. */
+@import '@fontsource/barlow-condensed/latin-600.css';
+@import '@fontsource/barlow-condensed/latin-700.css';
+@import '@fontsource/inter/latin-400.css';
+@import '@fontsource/inter/latin-500.css';
+@import '@fontsource/inter/latin-600.css';
+@import '@fontsource/inter/latin-700.css';
+
+@import './tokens.css';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    /* Pas de zoom automatique du texte en paysage sur iOS */
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    margin: 0;
+    min-height: 100dvh;
+    background: var(--fonte-bg);
+    color: var(--fonte-text);
+    font-family: Inter, system-ui, sans-serif;
+    font-size: 16px;
+    /* Un tap ne déclenche jamais de zoom ni de délai de 300 ms */
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  /* Les champs héritent du thème et restent à 16 px minimum, sinon
+     Safari iOS zoome sur le champ à la mise au point. */
+  input,
+  button,
+  textarea,
+  select {
+    font-family: inherit;
+    font-size: 16px;
+    color: inherit;
+  }
+
+  /* Le focus reste visible, y compris sur les surfaces sombres. */
+  :focus-visible {
+    outline: 2px solid var(--fonte-accent);
+    outline-offset: 2px;
+  }
+
+  /* Pas de flèches sur les champs numériques : la saisie se fait au clavier. */
+  input[type='number']::-webkit-outer-spin-button,
+  input[type='number']::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
+
+@layer utilities {
+  /* Marges de zone sûre, pour l'encoche et la barre de gestes. */
+  .pt-safe {
+    padding-top: env(safe-area-inset-top);
+  }
+  .pb-safe {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+  .mb-safe {
+    margin-bottom: env(safe-area-inset-bottom);
+  }
+  .inset-b-safe {
+    bottom: env(safe-area-inset-bottom);
+  }
+
+  /* Barre de défilement masquée pour les rangées de chips. */
+  .no-scrollbar {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Pendant une séance, le rebond de défilement gêne la saisie. */
+  .overscroll-none-y {
+    overscroll-behavior-y: none;
+  }
+}

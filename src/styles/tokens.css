@@ -1,0 +1,57 @@
+/*
+ * Fonte — source unique des valeurs de design.
+ * Toutes les couleurs, tailles et rayons de l'appli viennent d'ici :
+ * ce fichier définit les variables CSS, tailwind.config.ts les expose
+ * en classes utilitaires. Aucune valeur en dur ailleurs dans le code.
+ */
+
+:root {
+  color-scheme: dark;
+
+  /* Couleurs — thème sombre, celui de la salle */
+  --fonte-bg: #0e0f11;
+  --fonte-surface: #17191d;
+  --fonte-field: #1f2228;
+  --fonte-border: #2a2e35;
+  --fonte-text: #f4f1ea;
+  --fonte-muted: #9aa0ab;
+  --fonte-faint: #8c929d;
+
+  --fonte-accent: #ff9f1c;
+  --fonte-accent-pressed: #e88a00;
+  --fonte-on-accent: #1a1204;
+  --fonte-accent-soft: #261b0c;
+  --fonte-accent-soft-border: #6b4410;
+
+  --fonte-ok: #34d399;
+  --fonte-on-ok: #04231a;
+  --fonte-ok-soft: #11291f;
+
+  /* Chrome du navigateur et fond de la zone sûre */
+  --fonte-theme-color: #0e0f11;
+}
+
+/* Thème clair, en option. Mêmes noms, autres valeurs. */
+:root[data-theme='light'] {
+  color-scheme: light;
+
+  --fonte-bg: #f4f1ea;
+  --fonte-surface: #ffffff;
+  --fonte-field: #eae6dc;
+  --fonte-border: #d9d4c8;
+  --fonte-text: #14130f;
+  --fonte-muted: #5b5f68;
+  --fonte-faint: #767a83;
+
+  --fonte-accent: #ff9f1c;
+  --fonte-accent-pressed: #e88a00;
+  --fonte-on-accent: #1a1204;
+  --fonte-accent-soft: #fcefd9;
+  --fonte-accent-soft-border: #e8c98a;
+
+  --fonte-ok: #087a53;
+  --fonte-on-ok: #ffffff;
+  --fonte-ok-soft: #e3f3ec;
+
+  --fonte-theme-color: #f4f1ea;
+}
