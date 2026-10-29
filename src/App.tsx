@@ -9,6 +9,8 @@ import { PageAccueil } from '@/features/accueil/PageAccueil'
 import { PageAjoutExercice } from '@/features/exercices/PageAjoutExercice'
 import { PageDetailExercice } from '@/features/exercices/PageDetailExercice'
 import { PageHistorique } from '@/features/historique/PageHistorique'
+import { PageProfil } from '@/features/profil/PageProfil'
+import { PageReglages } from '@/features/reglages/PageReglages'
 import { PageSeance } from '@/features/workout/PageSeance'
 
 export function App() {
@@ -47,6 +49,8 @@ export function App() {
           <Route path="/" element={<PageAccueil />} />
           <Route path="/historique" element={<PageHistorique />} />
           <Route path="/exercice/:exerciceId" element={<PageDetailExercice />} />
+          <Route path="/profil" element={<PageProfil />} />
+          <Route path="/profil/reglages" element={<PageReglages />} />
         </Route>
         <Route path="/seance" element={<PageSeance />} />
         <Route path="/seance/exercices" element={<PageAjoutExercice />} />
