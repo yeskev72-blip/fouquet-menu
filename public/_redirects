@@ -1,0 +1,4 @@
+# Cloudflare Pages sert d'abord les fichiers qui existent, puis applique ces
+# règles. L'appli est une SPA : toute autre URL doit rendre index.html, sinon
+# un lien profond ouvert à froid renvoie une 404.
+/*  /index.html  200

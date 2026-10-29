@@ -38,7 +38,8 @@ développement).
 ## Structure
 
 ```
-public/            icônes, robots.txt (le manifeste est généré au build)
+public/            icônes, robots.txt, _redirects et _headers pour Cloudflare
+                   (le manifeste est généré au build)
 scripts/           génération des icônes
 src/
   components/      bibliothèque de composants du design system
@@ -129,34 +130,60 @@ qu'elle ne peut tenir.
 
 L'application doit être servie **en HTTPS** et **à la racine d'un domaine** :
 `start_url` et `scope` valent `/`, et un service worker ne s'enregistre pas en
-HTTP. Les fichiers de configuration pour les deux hébergeurs gratuits les plus
-simples sont déjà dans le dépôt.
+HTTP. Les fichiers de configuration des trois hébergeurs gratuits les plus
+simples sont déjà dans le dépôt ; il n'y a rien à régler à la main.
 
-**Vercel** (`vercel.json`) :
+### Cloudflare Pages — recommandé
+
+Le réseau de diffusion de Cloudflare a des points de présence en Afrique de
+l'Ouest, ce qui compte pour le public visé : la première visite, la seule qui
+passe par le réseau, arrive de plus près. L'offre gratuite n'a pas de limite de
+bande passante.
 
 ```bash
+npm run build
+npx wrangler pages deploy
+```
+
+La première exécution ouvre une page de connexion, puis crée le projet. Le site
+est ensuite servi sur `fonte.pages.dev`, et un domaine à toi s'ajoute depuis le
+tableau de bord.
+
+Par l'interface web (Workers & Pages → Create → Pages → Connect to Git), les
+réglages sont : commande de build `npm run build`, dossier de sortie `dist`.
+Chaque poussée sur la branche redéploie.
+
+La configuration tient dans `wrangler.toml`, plus deux fichiers de `public/`
+que Cloudflare lit dans le build : `_redirects` pour le repli SPA et `_headers`
+pour les durées de cache.
+
+### Vercel
+
+```bash
+npm run build
 npx vercel --prod
 ```
 
-**Netlify** (`netlify.toml`) :
+### Netlify
 
 ```bash
+npm run build
 npx netlify deploy --prod
 ```
 
-Dans les deux cas, importer le dépôt depuis l'interface web marche aussi : la
-commande de build et le dossier de sortie sont déjà déclarés. Les deux
-configurations font trois choses nécessaires : rendre `index.html` pour toute
-URL inconnue (sans quoi un lien profond ouvert à froid renvoie une 404), ne
-jamais mettre `sw.js` en cache long (c'est lui qui porte la mise à jour de
-tout le reste), et garder les fichiers de `assets/` indéfiniment, puisqu'ils
-portent une empreinte dans leur nom.
+Dans les trois cas, importer le dépôt depuis l'interface web marche aussi : la
+commande de build et le dossier de sortie sont déjà déclarés. Les trois
+configurations font les mêmes trois choses, nécessaires : rendre `index.html`
+pour toute URL inconnue (sans quoi un lien profond ouvert à froid renvoie une
+404), ne jamais mettre `sw.js` en cache long (c'est lui qui porte la mise à
+jour de tout le reste), et garder les fichiers de `assets/` indéfiniment,
+puisqu'ils portent une empreinte dans leur nom.
 
 Une fois le site en ligne, ouvre le lien sur un téléphone et vérifie que
 l'installation est proposée, puis passe en mode avion et recharge.
 
-> Le déploiement lui-même demande un compte Vercel ou Netlify : il n'a donc
-> pas été fait ici. Tout le reste est prêt.
+> Le déploiement lui-même demande un compte chez l'hébergeur : il n'a donc pas
+> été fait ici. Tout le reste est prêt.
 
 ## Qualité
 

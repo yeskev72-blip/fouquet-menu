@@ -1,0 +1,13 @@
+# Le service worker ne doit jamais être servi depuis un cache long : c'est lui
+# qui porte la mise à jour de tout le reste.
+/sw.js
+  Cache-Control: public, max-age=0, must-revalidate
+
+/manifest.webmanifest
+  Cache-Control: public, max-age=0, must-revalidate
+  Content-Type: application/manifest+json
+
+# Les fichiers d'assets portent une empreinte dans leur nom : ils peuvent être
+# gardés indéfiniment.
+/assets/*
+  Cache-Control: public, max-age=31536000, immutable

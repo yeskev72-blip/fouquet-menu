@@ -1,0 +1,5 @@
+# Projet Cloudflare Pages, purement statique : aucune Function, aucun binding.
+# Permet « npx wrangler pages deploy » sans arguments.
+name = "fonte"
+pages_build_output_dir = "dist"
+compatibility_date = "2025-06-01"
