@@ -22,6 +22,7 @@ const config: Config = {
       accent: {
         DEFAULT: 'var(--fonte-accent)',
         pressed: 'var(--fonte-accent-pressed)',
+        text: 'var(--fonte-accent-text)',
         soft: 'var(--fonte-accent-soft)',
         'soft-border': 'var(--fonte-accent-soft-border)',
       },
@@ -31,11 +32,13 @@ const config: Config = {
         soft: 'var(--fonte-ok-soft)',
       },
       'on-ok': 'var(--fonte-on-ok)',
+      'chart-line': 'var(--fonte-chart-line)',
     },
     spacing: {
       0: '0px',
       px: '1px',
       0.5: '2px',
+      0.75: '3px',
       1: '4px',
       2: '8px',
       3: '12px',
@@ -59,6 +62,7 @@ const config: Config = {
     },
     borderRadius: {
       none: '0px',
+      badge: '8px',
       field: '10px',
       btn: '12px',
       ctl: '14px',
@@ -105,9 +109,12 @@ const config: Config = {
     },
     borderWidth: { 0: '0px', DEFAULT: '1px', 2: '2px' },
     extend: {
-      minHeight: { touch: '48px' },
-      minWidth: { touch: '48px' },
-      height: { screen: '100dvh' },
+      // Les hauteurs de composants reprennent l'échelle d'espacement,
+      // plus « touch » : 48 px, la zone tactile plancher du design system.
+      minHeight: ({ theme }) => ({ ...theme('spacing'), touch: '48px' }),
+      minWidth: ({ theme }) => ({ ...theme('spacing'), touch: '48px' }),
+      height: ({ theme }) => ({ ...theme('spacing') }),
+      width: ({ theme }) => ({ ...theme('spacing') }),
       transitionDuration: { fast: '120ms' },
       keyframes: {
         'pr-pop': {

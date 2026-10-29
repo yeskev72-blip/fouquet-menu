@@ -1,10 +1,14 @@
+import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import { UpdateBanner } from '@/components/UpdateBanner'
+import { PageDemo } from '@/features/demo/PageDemo'
 
 export function App() {
   return (
-    <div className="min-h-screen bg-bg text-text">
-      <p className="p-5 font-display text-d-4xl font-bold">Fonte</p>
+    <BrowserRouter>
+      <Routes>
+        <Route path="*" element={<PageDemo />} />
+      </Routes>
       <UpdateBanner />
-    </div>
+    </BrowserRouter>
   )
 }

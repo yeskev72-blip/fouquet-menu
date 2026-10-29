@@ -22,10 +22,18 @@
   --fonte-on-accent: #1a1204;
   --fonte-accent-soft: #261b0c;
   --fonte-accent-soft-border: #6b4410;
+  /* Ambre quand il sert de texte ou d'icône plutôt que de fond. En clair,
+     #ff9f1c ne donne que 1,8:1 sur le fond crème : il faut un pas foncé. */
+  --fonte-accent-text: #ff9f1c;
 
   --fonte-ok: #34d399;
   --fonte-on-ok: #04231a;
   --fonte-ok-soft: #11291f;
+
+  /* Trait des courbes. En sombre c'est l'accent ; en clair l'ambre tombe à
+     2,05:1 sur blanc, sous le plancher de 3:1 des objets graphiques, d'où
+     un pas plus foncé réservé aux graphiques. */
+  --fonte-chart-line: #ff9f1c;
 
   /* Chrome du navigateur et fond de la zone sûre */
   --fonte-theme-color: #0e0f11;
@@ -48,10 +56,13 @@
   --fonte-on-accent: #1a1204;
   --fonte-accent-soft: #fcefd9;
   --fonte-accent-soft-border: #e8c98a;
+  --fonte-accent-text: #9a5b00;
 
   --fonte-ok: #087a53;
   --fonte-on-ok: #ffffff;
   --fonte-ok-soft: #e3f3ec;
+
+  --fonte-chart-line: #b86e00;
 
   --fonte-theme-color: #f4f1ea;
 }
