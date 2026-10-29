@@ -288,3 +288,38 @@ export async function recordsPersonnels(): Promise<RecordPersonnel[]> {
     })
     .sort((a, b) => b.poidsKg - a.poidsKg || b.reps - a.reps)
 }
+
+export interface SeanceDUnExercice {
+  workout: Workout
+  series: WorkoutSet[]
+  poidsMaxKg: number
+  volumeKg: number
+  meilleur1RMKg: number
+  aRecord: boolean
+}
+
+/**
+ * Historique d'un exercice, séance par séance, de la plus ancienne à la plus
+ * récente. Sert à la fois aux courbes et à la liste du détail.
+ */
+export async function historiqueExercice(exerciseId: string): Promise<SeanceDUnExercice[]> {
+  const entrees = await seriesValideesDe(exerciseId)
+
+  const parSeance = new Map<string, { workout: Workout; series: WorkoutSet[] }>()
+  for (const { serie, seance } of entrees) {
+    const courant = parSeance.get(seance.id) ?? { workout: seance, series: [] }
+    courant.series.push(serie)
+    parSeance.set(seance.id, courant)
+  }
+
+  return [...parSeance.values()]
+    .map(({ workout, series }) => ({
+      workout,
+      series,
+      poidsMaxKg: Math.max(...series.map((serie) => serie.weightKg)),
+      volumeKg: series.reduce((total, serie) => total + volumeSerie(serie), 0),
+      meilleur1RMKg: Math.max(...series.map((serie) => unRepMax(serie))),
+      aRecord: series.some((serie) => serie.isPr),
+    }))
+    .sort((a, b) => a.workout.startedAt - b.workout.startedAt)
+}

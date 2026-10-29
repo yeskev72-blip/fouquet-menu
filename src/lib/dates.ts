@@ -42,6 +42,14 @@ export function moisEtAnnee(date: Date): string {
   return `${nom.charAt(0).toUpperCase()}${nom.slice(1)} ${annee}`
 }
 
+/** « 22 oct. », « aujourd'hui », « hier » — sans jour de semaine. */
+export function dateCompacte(date: Date, maintenant = new Date()): string {
+  const jours = ecartEnJours(date, maintenant)
+  if (jours === 0) return "auj."
+  if (jours === 1) return 'hier'
+  return `${date.getDate()} ${moisCourt(date)}`
+}
+
 export function jourCourt(date: Date): string {
   return JOURS_COURTS[date.getDay()] ?? ''
 }

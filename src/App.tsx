@@ -7,6 +7,8 @@ import { applyTheme, watchSystemTheme } from '@/styles/theme'
 import { Layout } from '@/features/Layout'
 import { PageAccueil } from '@/features/accueil/PageAccueil'
 import { PageAjoutExercice } from '@/features/exercices/PageAjoutExercice'
+import { PageDetailExercice } from '@/features/exercices/PageDetailExercice'
+import { PageHistorique } from '@/features/historique/PageHistorique'
 import { PageSeance } from '@/features/workout/PageSeance'
 
 export function App() {
@@ -43,6 +45,8 @@ export function App() {
       <Routes>
         <Route element={<Layout />}>
           <Route path="/" element={<PageAccueil />} />
+          <Route path="/historique" element={<PageHistorique />} />
+          <Route path="/exercice/:exerciceId" element={<PageDetailExercice />} />
         </Route>
         <Route path="/seance" element={<PageSeance />} />
         <Route path="/seance/exercices" element={<PageAjoutExercice />} />

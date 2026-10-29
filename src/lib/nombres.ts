@@ -1,10 +1,12 @@
 /**
- * Formats français : virgule décimale, espace insécable fine comme séparateur
+ * Formats français : virgule décimale, espace insécable comme séparateur
  * de milliers. Tout passe par ici pour que l'appli parle la même langue
  * partout, y compris dans les étiquettes d'accessibilité.
  */
 
-const ESPACE_MILLIERS = ' '
+// L'espace fine insécable (U+202F) manque à Barlow Condensed et disparaît
+// à l'affichage : l'espace insécable ordinaire passe dans toutes les polices.
+const ESPACE_MILLIERS = ' '
 
 /** Analyse une saisie utilisateur : « 82,5 » et « 82.5 » sont acceptés. */
 export function analyserNombre(saisie: string): number | null {
@@ -22,7 +24,7 @@ export function formaterNombre(valeur: number, decimalesMax = 2): string {
 
 /** « 1 740 kg » — séparateur de milliers pour les gros volumes. */
 export function formaterPoids(kg: number, unite: 'kg' | 'lb' = 'kg'): string {
-  return `${formaterGrandNombre(kg)} ${unite}`
+  return `${formaterGrandNombre(kg)}\u00a0${unite}`
 }
 
 export function formaterGrandNombre(valeur: number): string {
