@@ -6,6 +6,7 @@ import { lireReglages } from '@/db/reglages'
 import { applyTheme, watchSystemTheme } from '@/styles/theme'
 import { Layout } from '@/features/Layout'
 import { PageAccueil } from '@/features/accueil/PageAccueil'
+import { PageAjoutExercice } from '@/features/exercices/PageAjoutExercice'
 import { PageSeance } from '@/features/workout/PageSeance'
 
 export function App() {
@@ -44,6 +45,7 @@ export function App() {
           <Route path="/" element={<PageAccueil />} />
         </Route>
         <Route path="/seance" element={<PageSeance />} />
+        <Route path="/seance/exercices" element={<PageAjoutExercice />} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
       <UpdateBanner />
